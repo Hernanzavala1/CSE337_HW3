@@ -29,7 +29,8 @@ read -a weights <<< $C
             weights[${#weights[@]}]=1;
             done
     fi
-awk -v array1="${weights[*]}" -F',' 'BEGIN{split(array1,list," "); sum=0; count=0} NR>1; {count+=1; for(i=2;i<=NF;i++) sum+=(list[i-1]*$i);} END{ print sum "," count > ".iloveannasomuch.txt"}' "${weightFile}" > ".likesooomuch.txt"
+
+awk -v array1="${weights[*]}" -F',' 'BEGIN{split(array1,list," "); sum=0; count=0} NR>1;  /^\s*$/ {next;}  {count+=1;  for(i=2;i<=NF;i++) sum+=(list[i-1]*$i);} END{ print sum "," count > ".iloveannasomuch.txt"}' "${weightFile}" > ".likesooomuch.txt"
 
 while IFS="," read result count
 do 
